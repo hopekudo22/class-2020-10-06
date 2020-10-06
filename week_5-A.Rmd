@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
+library(ggplot2)
 ```
 
 
@@ -13,6 +14,18 @@ library(tidyverse)
 
 **Prompt:** Create a graphic of the posterior distribution of the [538 forecast](https://projects.fivethirtyeight.com/2020-election-forecast/) for Biden's electoral vote total. Recall the example given in Chapter 5 of *The Primer*.
 
+```{r}
+
+q1 <- read_csv("data_538/election-forecasts-2020/presidential_ev_probabilities_2020.csv")
+
+q1 %>%
+  ggplot(mapping = aes(x = total_ev, y = evprob_chal)) +
+  geom_line(color = "blue") +
+  xlim(0,600) +
+  labs(x = "Total Electoral Votes", y = "Probability of Occurence") +
+  theme_classic()
+
+```
 
 
 ### Scene 2
@@ -25,8 +38,18 @@ b) Assume that Biden implements the campaign, create the actual Preceptor Table 
 
 c) What does the actual Preceptor Table look like now?
 
+```{r}
 
+q2 <- read_csv("data_538/election-forecasts-2020/presidential_state_toplines_2020.csv")
 
+q2 %>%
+  filter(state == "Wisconsin") %>%
+  
+  q2 %>%
+  ggplot(mapping = aes(x = voteshare_inc, y = evprob_chal)) +
+  geom_line(color = "blue") 
+
+```
 
 ### Scene 3
 
@@ -41,7 +64,10 @@ c) What is the probability of a "very close" election, defined as Biden winning 
 
 d) How many unique electoral vote totals does 538 view as impossible for Biden to achieve? Some of these are truly impossible. Given an example of one of these. Why does 538 think that some vote totals, while theoretically possible, should be given zero probability in its posterior?
 
+```{r}
 
+
+```
 
 
 ### Scene 4
@@ -55,4 +81,5 @@ b) Does it make sense to calculate an average causal effect?
 c) There are two approaches Biden might take to determine which states to use the campaign in. He could randomize. He could select states which, in his judgment, do the most to increase his odds of winning the presidency. Which should he do?
 
 d) Assume he randomized. What conclusions might we be able to draw after the election? How would we draw them.
+
 
